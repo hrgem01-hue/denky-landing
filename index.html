@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Denky — 입어보고 사는 가상피팅 패션</title>
+  <meta name="description" content="내 사진 위에 옷을 입혀보는 가상피팅 패션 커머스, Denky. 곧 만나요." />
+
+  <!-- 공유(카카오/트위터/페이스북) 미리보기용 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Denky — 입어보고 사는 가상피팅 패션" />
+  <meta property="og:description" content="내 사진 위에 옷을 입혀보는 가상피팅 패션 커머스. 출시 알림을 신청하세요." />
+  <meta property="og:image" content="og-image.png" /> <!-- TODO: 1200x630 미리보기 이미지 추가 -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- 파비콘 (인라인 SVG — 별도 파일 불필요) -->
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%236D28D9"/><text x="16" y="23" font-size="20" font-family="Arial" font-weight="bold" fill="white" text-anchor="middle">D</text></svg>' />
+
+  <!-- 브랜드 폰트 (앱과 동일한 Pretendard, 실패 시 시스템 폰트로 대체) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    :root {
+      --primary: #6D28D9;
+      --primary-dark: #4C1D95;
+      --accent-soft: #EDE9FE;
+      --ink: #111827;
+      --sub: #6B7280;
+      --border: #E5E7EB;
+      --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(1200px 600px at 50% -10%, #F3EEFF 0%, rgba(243,238,255,0) 60%),
+        #FFFFFF;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .wrap { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+    /* 헤더 */
+    header { padding: 28px 0; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 22px; letter-spacing: -.5px; }
+    .brand .logo { width: 32px; height: 32px; border-radius: 9px; background: var(--primary); color: #fff;
+      display: grid; place-items: center; font-size: 18px; }
+
+    /* 히어로 */
+    .hero { padding: 40px 0 56px; text-align: center; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-soft); color: var(--primary-dark);
+      font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 999px;
+    }
+    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--primary); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    h1 { font-size: clamp(34px, 7vw, 60px); font-weight: 800; letter-spacing: -1.5px; margin: 22px 0 16px; line-height: 1.15; }
+    h1 .accent { color: var(--primary); }
+    .lead { font-size: clamp(16px, 2.4vw, 19px); color: var(--sub); max-width: 540px; margin: 0 auto; }
+
+    /* 사전예약 폼 */
+    .signup { margin: 32px auto 0; max-width: 460px; }
+    .signup form { display: flex; gap: 10px; }
+    .signup input {
+      flex: 1; min-width: 0; height: 52px; padding: 0 16px; font-size: 16px;
+      border: 1.5px solid var(--border); border-radius: 12px; font-family: inherit; outline: none;
+      transition: border-color .15s;
+    }
+    .signup input:focus { border-color: var(--primary); }
+    .signup button {
+      height: 52px; padding: 0 22px; font-size: 16px; font-weight: 700; white-space: nowrap;
+      background: var(--primary); color: #fff; border: 0; border-radius: 12px; font-family: inherit;
+      transition: background .15s, transform .05s;
+    }
+    .signup button:hover { background: var(--primary-dark); }
+    .signup button:active { transform: translateY(1px); }
+    .signup .note { font-size: 13px; color: var(--sub); margin-top: 12px; }
+    .signup .ok { color: var(--primary-dark); font-weight: 700; }
+
+    /* 폰 목업 (CSS 전용, 이미지 없음) */
+    .mock { margin: 56px auto 0; width: 248px; }
+    .phone {
+      border: 10px solid #111827; border-radius: 38px; overflow: hidden; aspect-ratio: 9/19;
+      background: linear-gradient(160deg, #7C3AED, #4C1D95);
+      box-shadow: 0 30px 60px rgba(76,29,149,.28); position: relative;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .phone .label {
+      color: #fff; text-align: center; padding: 28px 18px; width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,.45), transparent);
+    }
+    .phone .label b { display: block; font-size: 17px; }
+    .phone .label span { font-size: 12px; opacity: .85; }
+    .phone .tag {
+      position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+      background: rgba(255,255,255,.18); backdrop-filter: blur(4px);
+      color: #fff; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px;
+    }
+
+    /* 기능 카드 */
+    .features { padding: 64px 0 24px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+    .card .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft);
+      display: grid; place-items: center; font-size: 22px; margin-bottom: 14px; }
+    .card h3 { font-size: 17px; font-weight: 800; margin-bottom: 6px; }
+    .card p { font-size: 14px; color: var(--sub); }
+
+    /* 푸터 */
+    footer { margin-top: auto; padding: 40px 0; border-top: 1px solid var(--border); color: var(--sub); font-size: 13px; }
+    footer .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    footer a { color: var(--primary-dark); font-weight: 600; }
+
+    @media (max-width: 680px) {
+      .grid { grid-template-columns: 1fr; }
+      .signup form { flex-direction: column; }
+      .signup button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="brand"><span class="logo">D</span>Denky</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <span class="badge"><span class="dot"></span>출시 준비 중 · COMING SOON</span>
+        <h1>입어보고 <span class="accent">사세요.</span></h1>
+        <p class="lead">내 사진 위에 옷을 입혀보는 가상피팅 패션 커머스.<br />사이즈 고민 없이, 어울리는지 먼저 확인하세요.</p>
+
+        <div class="signup">
+          <form id="waitlist">
+            <input type="email" id="email" placeholder="이메일을 입력하세요" required autocomplete="email" />
+            <button type="submit">출시 알림 받기</button>
+          </form>
+          <p class="note" id="note">출시되면 가장 먼저 알려드릴게요. 광고성 메일은 보내지 않습니다.</p>
+        </div>
+
+        <div class="mock" aria-hidden="true">
+          <div class="phone">
+            <span class="tag">✨ 가상피팅</span>
+            <div class="label"><b>내 사진으로 입어보기</b><span>오버핏 · 슬림까지 한 번에</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="wrap">
+        <div class="grid">
+          <div class="card">
+            <div class="ico">🪞</div>
+            <h3>가상피팅</h3>
+            <p>내 사진(또는 아바타) 위에 옷을 합성해, 사기 전에 어울리는지 확인해요.</p>
+          </div>
+          <div class="card">
+            <div class="ico">📐</div>
+            <h3>AI 핏 미리보기</h3>
+            <p>오버핏·슬림까지 핏을 바꿔 보고, 추천 사이즈로 실패 없이 골라요.</p>
+          </div>
+          <div class="card">
+            <div class="ico">🛍️</div>
+            <h3>안심 결제·빠른 배송</h3>
+            <p>마음에 드는 옷을 앱에서 바로 주문. 안전한 결제와 빠른 배송까지.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap row">
+      <span>© 2026 Denky. All rights reserved.</span>
+      <span>문의 <a href="mailto:hello@denky.example">hello@denky.example</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // ── 사전예약(출시 알림) ──────────────────────────────────────────────
+    // 실제로 이메일을 저장하려면 아래 FORM_ENDPOINT 에 수집 주소를 넣으세요.
+    //  · 가장 간단: Formspree(https://formspree.io) 무료 폼 → 발급 URL 붙여넣기
+    //  · 또는 우리 백엔드에 /waitlist 엔드포인트를 만들어 연결
+    // 비워두면 화면 안내만 하고, 입력값은 localStorage 에 임시 보관합니다(유실 방지).
+    const FORM_ENDPOINT = "";
+
+    const form = document.getElementById("waitlist");
+    const note = document.getElementById("note");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      if (!email) return;
+      try {
+        if (FORM_ENDPOINT) {
+          await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({ email }),
+          });
+        } else {
+          // 엔드포인트 미설정: 임시로 브라우저에 보관
+          const list = JSON.parse(localStorage.getItem("denky_waitlist") || "[]");
+          list.push({ email, at: new Date().toISOString() });
+          localStorage.setItem("denky_waitlist", JSON.stringify(list));
+        }
+        note.innerHTML = '<span class="ok">신청 완료! 출시되면 알려드릴게요. 🎉</span>';
+        form.reset();
+      } catch (_) {
+        note.textContent = "잠시 문제가 생겼어요. 잠시 후 다시 시도해 주세요.";
+      }
+    });
+  </script>
+</body>
+</html>
