@@ -1,0 +1,8 @@
+# 입어봐 랜딩 — 검색엔진 크롤러 안내
+User-agent: *
+Allow: /
+# API 엔드포인트는 색인 대상 아님
+Disallow: /waitlist
+Disallow: /admin-waitlist
+
+Sitemap: https://www.ibeobwa.com/sitemap.xml
