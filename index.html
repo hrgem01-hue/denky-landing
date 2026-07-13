@@ -203,6 +203,8 @@
     .manifesto .in { padding-block: clamp(60px, 8.5vw, 116px); max-width: 860px; margin-inline: auto; text-align: center; }
     .manifesto .display { font-size: clamp(1.55rem, 3.4vw, 2.5rem); margin-top: 22px; }
     .manifesto .sub { margin-top: 20px; color: var(--sub); font-size: 1.05rem; max-width: 52ch; margin-inline: auto; }
+    /* 폰에서는 데스크톱용 강제 줄바꿈을 풀어 자연스럽게 흐르게 */
+    @media (max-width: 700px) { .manifesto .display br { display: none; } }
 
     /* ── 챕터(01/02/03) 공통 ────────────────────────────────────── */
     .chapter .in { padding-block: clamp(56px, 8vw, 104px); }
@@ -240,6 +242,12 @@
       padding: 16px 22px; border-top: 1px solid var(--border); background: var(--surface); }
     .size-report .rf span { font-size: .82rem; color: var(--sub); font-weight: 600; }
     .size-report .rf b { font-size: 1.5rem; font-weight: 800; color: var(--blue-dark); }
+    /* 좁은 화면: 표 패딩·글자 축소 — 4열이 360px 폰에서도 답답하지 않게 */
+    @media (max-width: 480px) {
+      .size-report th, .size-report td { padding: 10px 12px; font-size: .86rem; }
+      .size-report .rh, .size-report .rf { padding: 13px 14px; }
+      .size-report td.verdict { font-size: .78rem; }
+    }
 
     /* 02 — 전문가 원칙 인용 카드 */
     .principles { display: flex; flex-direction: column; gap: 14px; }
